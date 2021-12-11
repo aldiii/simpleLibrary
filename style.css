@@ -7,9 +7,15 @@
 :root {
   --light-gray: hsl(167, 29%, 94%);
   --medium-gray: hsl(167, 29%, 77%);
-  --darker-gray: hsl(167, 29%, 11%);
+  --darker-gray: hsl(167, 29%, 16%);
   --darkest: hsl(167, 29%, 6%);
   --white: hsl(167, 29%, 99%);
+  --alert: hsl(24, 84%, 60%);
+  --gradient: linear-gradient(
+    90deg,
+    hsl(187, 75%, 40%) 0%,
+    hsl(142, 93%, 45%) 100%
+  );
 }
 body {
   font-family: "Roboto", sans-serif;
@@ -17,6 +23,14 @@ body {
   text-align: center;
 }
 
+header {
+  padding: 3em;
+  background-image: var(--gradient);
+  color: var(--white);
+}
+h1 {
+  text-transform: uppercase;
+}
 h2 {
   margin: 1.5em;
 }
@@ -38,6 +52,13 @@ h2 {
   display: block;
 }
 
+.form input:invalid {
+  border: 2px solid var(--alert);
+}
+.form input:focus {
+  border: 2px solid var(--darker-gray);
+}
+
 .form label {
   font-size: 1.1rem;
   color: var(--darker-gray);
@@ -49,6 +70,46 @@ h2 {
   width: auto;
   display: block;
 }
-.submit {
+input.submit {
+  background-image: var(--gradient);
+  color: var(--white);
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 0.5em 1em;
   margin: 1em auto;
+  transition: 0.3s;
+}
+.submit:hover {
+  transform: scale(1.1);
+}
+.result {
+  overflow-x: scroll;
+}
+.book-table {
+  border-collapse: collapse;
+  margin: 1em auto;
+  min-width: 70%;
+}
+tr:first-child {
+  background-image: var(--gradient);
+}
+
+td {
+  border: 1px solid var(--medium-gray);
+  padding: 1em;
+}
+th {
+  color: var(--white);
+  border: 2px solid var(--white);
+  padding: 1em;
+}
+@media screen and (max-width: 750px) {
+  .form {
+    width: 70vw;
+  }
+}
+@media screen and (max-width: 400px) {
+  .form {
+    width: 90vw;
+  }
 }
