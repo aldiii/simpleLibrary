@@ -1,5 +1,6 @@
 const addBookForm = document.getElementById("add-book-form");
 const resultDiv = document.getElementById("result");
+let books = [];
 
 const bookCategories = {
   fiction: "Beletrystyka",
@@ -8,10 +9,9 @@ const bookCategories = {
 };
 
 const saveToLocalStorage = (key, data) => {
-  const dataArray = getDataFromLocalStrage(key);
-  dataArray.push(data);
-  localStorage.setItem(key, JSON.stringify(dataArray));
+  localStorage.setItem(key, JSON.stringify(data));
 };
+
 const getDataFromLocalStrage = (key) => {
   return localStorage.getItem(key) !== null
     ? JSON.parse(localStorage.getItem(key))
@@ -22,7 +22,15 @@ const addBook = (event) => {
   event.preventDefault();
   const bookFormData = new FormData(event.target);
   const bookDataObject = Object.fromEntries(bookFormData.entries());
-  saveToLocalStorage("MyBooks", bookDataObject);
+  books.push(bookDataObject);
+  saveToLocalStorage("MyBooks", books);
+  const table = document.getElementById("book-table");
+  if (table) {
+    table.appendChild(generateTableRow(bookDataObject));
+  } else {
+    resultDiv.innerHTML = "";
+    showBooksData(books);
+  }
   event.target.reset();
 };
 
@@ -56,13 +64,18 @@ const generateTableRow = (book) => {
 const showBooksData = (books) => {
   if (books.length > 0) {
     const table = document.createElement("table");
+    table.classList.add("book-table");
     table.appendChild(generateTableHeader());
     books.forEach((book) => table.appendChild(generateTableRow(book)));
     resultDiv.appendChild(table);
+  } else {
+    const message = document.createElement("p");
+    message.innerText = "Nie dodałeś jeszcze żadnych książek!";
+    resultDiv.appendChild(message);
   }
 };
 
-const books = getDataFromLocalStrage("MyBooks");
+books = getDataFromLocalStrage("MyBooks");
 showBooksData(books);
 
 addBookForm.addEventListener("submit", addBook);
