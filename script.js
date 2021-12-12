@@ -42,10 +42,22 @@ const generateTableHeader = () => {
   return tHeader;
 };
 
+const generateTableRow = (book) => {
+  const tr = document.createElement("tr");
+  const bookKeys = ["title", "author", "priority", "category"];
+  bookKeys.forEach((key) => {
+    const cell = tr.insertCell();
+    const text = key === "category" ? bookCategories[book[key]] : book[key];
+    cell.innerText = text;
+  });
+  return tr;
+};
+
 const showBooksData = (books) => {
   if (books.length > 0) {
     const table = document.createElement("table");
     table.appendChild(generateTableHeader());
+    books.forEach((book) => table.appendChild(generateTableRow(book)));
     resultDiv.appendChild(table);
   }
 };
