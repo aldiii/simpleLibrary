@@ -83,7 +83,7 @@ input.submit {
   transform: scale(1.1);
 }
 .result {
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 .book-table {
   border-collapse: collapse;
